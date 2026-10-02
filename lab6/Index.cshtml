@@ -1,0 +1,71 @@
+﻿@model IEnumerable<product.Models.Product>
+
+@{
+    ViewData["Title"] = "Product Catalog";
+    var categories = ViewBag.Categories as List<string>;
+}
+
+<div class="container my-4">
+    <!-- Header Section -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold text-primary mb-1">Product Catalog</h1>
+            <p class="text-muted">Explore our modern collection of items</p>
+        </div>
+        <a asp-action="Create" class="btn btn-success btn-lg shadow-sm">
+            <i class="bi bi-plus-lg"></i> + Add New Product
+        </a>
+    </div>
+
+    <!-- Search & Filter Bar -->
+    <div class="card shadow-sm border-0 mb-4 bg-light">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-3">
+                <div class="col-md-6">
+                    <input type="text" name="searchString" value="@ViewBag.CurrentSearch" class="form-control" placeholder="Search products by name or description..." />
+                </div>
+                <div class="col-md-4">
+                    <select name="category" class="form-select">
+                        <option value="All">All Categories</option>
+                        @if (categories != null)
+                        {
+                            @foreach (var cat in categories)
+                            {
+                                <option value="@cat" selected="@(cat == ViewBag.CurrentCategory)">@cat</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Product Cards Grid -->
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden position-relative">
+                    <span class="position-absolute top-0 end-0 m-2 badge rounded-pill @(item.IsInStock ? "bg-success" : "bg-danger")">
+                        @(item.IsInStock ? "In Stock" : "Out of Stock")
+                    </span>
+                    <img src="@item.ImageUrl" class="card-img-top" alt="@item.Name" style="height: 180px; object-fit: cover;" />
+
+                    <div class="card-body d-flex flex-column">
+                        <span class="text-uppercase text-muted fs-7 fw-bold">@item.Category</span>
+                        <h5 class="card-title text-truncate my-1">@item.Name</h5>
+                        <p class="card-text text-muted small flex-grow-1">@item.Description</p>
+
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top">
+                            <span class="fs-5 fw-bold text-dark">₹@item.Price.ToString("N2")</span>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
