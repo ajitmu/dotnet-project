@@ -1,0 +1,54 @@
+﻿@model Feedback_Management.Models.Feedback
+
+@using (Html.BeginForm("SubmitFeedback", "Feedback", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Name, new { @class = "form-label fw-semibold text-dark" })
+        <div class="input-group">
+            <span class="input-group-text bg-light border-end-0"><i class="bi bi-person text-muted"></i></span>
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control border-start-0 ps-0 bg-light", placeholder = "Enter Full Name" })
+        </div>
+        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger small mt-1 d-block" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Email, new { @class = "form-label fw-semibold text-dark" })
+        <div class="input-group">
+            <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope text-muted"></i></span>
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control border-start-0 ps-0 bg-light", placeholder = "name@example.com" })
+        </div>
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger small mt-1 d-block" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Rating, new { @class = "form-label fw-semibold text-dark" })
+        <div class="input-group">
+            <span class="input-group-text bg-light border-end-0"><i class="bi bi-star text-muted"></i></span>
+            @Html.DropDownListFor(m => m.Rating, new SelectList(new[] {
+            new { Value = 5, Text = "5 ⭐ - Excellent" },
+                new { Value = 4, Text = "4 ⭐ - Very Good" },
+                new { Value = 3, Text = "3 ⭐ - Good" },
+                new { Value = 2, Text = "2 ⭐ - Fair" },
+                new { Value = 1, Text = "1 ⭐ - Poor" }
+                }, "Value", "Text"), "-- Select Rating --", new { @class = "form-select border-start-0 ps-0 bg-light" })
+    </div>
+    @Html.ValidationMessageFor(m => m.Rating, "", new { @class = "text-danger small mt-1 d-block" })
+</div>
+
+<div class="mb-4">
+    @Html.LabelFor(m => m.Comments, new { @class = "form-label fw-semibold text-dark" })
+    @Html.TextAreaFor(m => m.Comments, new { @class = "form-control bg-light", rows = 4, placeholder = "Your feedback or suggestions..." })
+    @Html.ValidationMessageFor(m => m.Comments, "", new { @class = "text-danger small mt-1 d-block" })
+</div>
+
+<div class="d-flex justify-content-between align-items-center pt-2">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary px-3 rounded-3 fw-semibold">
+        <i class="bi bi-arrow-left me-1"></i> Back
+    </a>
+    <button type="submit" class="btn btn-primary px-4 py-2 rounded-3 fw-bold shadow-sm">
+        Submit Feedback <i class="bi bi-send ms-1"></i>
+    </button>
+</div>
+}
