@@ -1,0 +1,38 @@
+@Practical_10_Student_REST_API_HostAddress = http://localhost:5289
+
+### 1. Get all students
+GET {{Practical_10_Student_REST_API_HostAddress}}/api/students
+Accept: application/json
+
+### 2. Get student by ID
+GET {{Practical_10_Student_REST_API_HostAddress}}/api/students/1
+Accept: application/json
+
+### 3. Add a new student
+POST {{Practical_10_Student_REST_API_HostAddress}}/api/students
+Content-Type: application/json
+
+{
+  "name": "Aarav",
+  "email": "aarav@gmail.com",
+  "department": "Computer Science",
+  "semester": 5
+}
+
+### 4. Update student (ID 1)
+PUT {{Practical_10_Student_REST_API_HostAddress}}/api/students/1
+Content-Type: application/json
+
+{
+  "name": "Rahul Sharma",
+  "email": "rahul.sharma@gmail.com",
+  "department": "Computer Engineering",
+  "semester": 6
+}
+
+### 5. Delete student (ID 2)
+DELETE {{Practical_10_Student_REST_API_HostAddress}}/api/students/2
+
+### Try to GET the deleted student by Id
+GET {{Practical_10_Student_REST_API_HostAddress}}/api/students/2
+Accept: application/json
