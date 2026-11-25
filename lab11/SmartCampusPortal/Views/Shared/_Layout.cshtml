@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Smart Campus Service Portal</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="topbar">
+        <div class="container">
+            <a class="brand" asp-controller="ServiceRequest" asp-action="Index">Smart Campus Service Portal</a>
+            <nav>
+                <a asp-controller="ServiceRequest" asp-action="Index">All Requests</a>
+                <a asp-controller="ServiceRequest" asp-action="Create">New Request</a>
+                <a href="/api/ServiceApi" target="_blank">API</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        @if (TempData["Message"] != null)
+        {
+            <div class="flash">@TempData["Message"]</div>
+        }
+        @RenderBody()
+    </main>
+
+    <footer class="container footer">
+        Smart Campus Service Portal &middot; ASP.NET Core MVC + ADO.NET + REST API
+    </footer>
+</body>
+</html>

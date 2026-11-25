@@ -1,0 +1,24 @@
+@model ServiceRequest
+@{
+    ViewData["Title"] = "Update Status";
+}
+
+<h2>Update Request Status</h2>
+
+<form asp-action="UpdateStatus" method="post" class="form-card">
+    <input type="hidden" name="id" value="@Model.RequestId" />
+
+    <p>
+        <strong>Request #@Model.RequestId</strong><br />
+        @Model.StudentName &ndash; @Model.ServiceType<br />
+        <em>@Model.Description</em>
+    </p>
+
+    <label for="status">Status</label>
+    <select id="status" name="status" asp-items="@(new SelectList(ServiceOptions.Statuses, Model.Status))"></select>
+
+    <div class="form-buttons">
+        <input type="submit" class="btn" value="Update Status" />
+        <a asp-action="Index">Back to List</a>
+    </div>
+</form>

@@ -1,0 +1,43 @@
+@SmartCampusPortal_HostAddress = http://localhost:5200
+
+### 1. Get all service requests
+GET {{SmartCampusPortal_HostAddress}}/api/ServiceApi
+Accept: application/json
+
+### 2. Get service request by ID
+GET {{SmartCampusPortal_HostAddress}}/api/ServiceApi/1
+Accept: application/json
+
+### 3. Create a new service request
+POST {{SmartCampusPortal_HostAddress}}/api/ServiceApi
+Content-Type: application/json
+
+{
+  "studentName": "Aarav Shah",
+  "department": "Computer Engineering",
+  "serviceType": "IT Support",
+  "description": "Unable to login to the student portal",
+  "priority": "High"
+}
+
+### 4. Update status of request 1
+PUT {{SmartCampusPortal_HostAddress}}/api/ServiceApi/UpdateStatus/1
+Content-Type: application/json
+
+{
+  "status": "Completed"
+}
+
+### 5. Delete request 2
+DELETE {{SmartCampusPortal_HostAddress}}/api/ServiceApi/2
+
+### 6. Validation error (empty body fields -> 400 Bad Request)
+POST {{SmartCampusPortal_HostAddress}}/api/ServiceApi
+Content-Type: application/json
+
+{
+  "studentName": "",
+  "department": "",
+  "serviceType": "Gym",
+  "description": ""
+}

@@ -1,0 +1,68 @@
+@model IEnumerable<ServiceRequest>
+@{
+    ViewData["Title"] = "Service Requests";
+    string current = ViewBag.CurrentFilter as string;
+}
+
+<h2>Smart Campus Service Requests</h2>
+
+<div class="stats">
+    <a class="stat @(string.IsNullOrEmpty(current) ? "active" : "")" asp-action="Index">
+        <span class="num">@ViewBag.Total</span> All
+    </a>
+    <a class="stat @(current == "Pending" ? "active" : "")" asp-action="Index" asp-route-status="Pending">
+        <span class="num">@ViewBag.Pending</span> Pending
+    </a>
+    <a class="stat @(current == "In Progress" ? "active" : "")" asp-action="Index" asp-route-status="In Progress">
+        <span class="num">@ViewBag.InProgress</span> In Progress
+    </a>
+    <a class="stat @(current == "Completed" ? "active" : "")" asp-action="Index" asp-route-status="Completed">
+        <span class="num">@ViewBag.Completed</span> Completed
+    </a>
+</div>
+
+<p>
+    <a class="btn" asp-action="Create">Create New Request</a>
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Request ID</th>
+            <th>Student Name</th>
+            <th>Department</th>
+            <th>Service Type</th>
+            <th>Description</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.RequestId</td>
+                <td>@item.StudentName</td>
+                <td>@item.Department</td>
+                <td>@item.ServiceType</td>
+                <td>@item.Description</td>
+                <td>@item.Priority</td>
+                <td><span class="badge status-@item.Status.Replace(" ", "").ToLower()">@item.Status</span></td>
+                <td>@item.RequestDate.ToString("dd-MM-yyyy HH:mm")</td>
+                <td class="actions">
+                    <a asp-action="UpdateStatus" asp-route-id="@item.RequestId">Update Status</a>
+                    <form asp-action="Delete" asp-route-id="@item.RequestId" method="post"
+                          onsubmit="return confirm('Delete this request?');">
+                        <button type="submit" class="link-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        @if (!Model.Any())
+        {
+            <tr><td colspan="9" class="empty">No requests found.</td></tr>
+        }
+    </tbody>
+</table>

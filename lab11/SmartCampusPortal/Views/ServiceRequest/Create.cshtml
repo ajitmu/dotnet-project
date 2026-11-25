@@ -1,0 +1,35 @@
+@model ServiceRequest
+@{
+    ViewData["Title"] = "Create Request";
+}
+
+<h2>Create Campus Service Request</h2>
+
+<form asp-action="Create" method="post" class="form-card">
+    <div asp-validation-summary="ModelOnly" class="field-error"></div>
+
+    <label asp-for="StudentName">Student Name</label>
+    <input asp-for="StudentName" />
+    <span asp-validation-for="StudentName" class="field-error"></span>
+
+    <label asp-for="Department">Department</label>
+    <input asp-for="Department" />
+    <span asp-validation-for="Department" class="field-error"></span>
+
+    <label asp-for="ServiceType">Service Type</label>
+    <select asp-for="ServiceType" asp-items="@(new SelectList(ServiceOptions.ServiceTypes))"></select>
+    <span asp-validation-for="ServiceType" class="field-error"></span>
+
+    <label asp-for="Description">Description</label>
+    <textarea asp-for="Description" rows="4"></textarea>
+    <span asp-validation-for="Description" class="field-error"></span>
+
+    <label asp-for="Priority">Priority</label>
+    <select asp-for="Priority" asp-items="@(new SelectList(ServiceOptions.Priorities))"></select>
+    <span asp-validation-for="Priority" class="field-error"></span>
+
+    <div class="form-buttons">
+        <input type="submit" class="btn" value="Submit Request" />
+        <a asp-action="Index">Back to List</a>
+    </div>
+</form>
